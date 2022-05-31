@@ -6,14 +6,13 @@ import time
 class FPS():
     def __init__(self):
         self.totframes = 0
-        self.tottime = 0
+        self.startime = time.time()
 
-    def update(self, elapsedtime):
+    def update(self):
         self.totframes = self.totframes+1
-        self.tottime = self.tottime+elapsedtime
 
-    def getfps(self):
-        return self.totframes/self.tottime
+    def getfps(self, curtime):
+        return self.totframes/(curtime-self.startime)
 
 if __name__ == '__main__':
 
@@ -26,16 +25,14 @@ if __name__ == '__main__':
     
 
     while True:
-        start = time.time()
         check, frame = cam.read()
         frame = detect_face_cam.detect_one(model, frame, device)
 
         cv2.imshow('video', frame)
 
-        elapsed = time.time()-start
+        fps.update()
 
-        fps.update(elapsed)
-        print(f"Current fps: {fps.getfps()}")
+        print(f"Current fps: {fps.getfps(time.time())}")
 
         key = cv2.waitKey(1)
         if key == 27:

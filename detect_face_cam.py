@@ -108,7 +108,7 @@ def detect_one(model, image, device):
 
     #print('img.shape: ', img.shape)
     #print('orgimg.shape: ', orgimg.shape)
-
+    xyxy_list = []
     # Process detections
     for i, det in enumerate(pred):  # detections per image
         if len(det):
@@ -123,11 +123,13 @@ def detect_one(model, image, device):
 
             for j in range(det.size()[0]):
                 xyxy = det[j, :4].view(-1).tolist()
+                xyxy_list.append(xyxy)
                 conf = det[j, 4].cpu().numpy()
                 landmarks = det[j, 5:15].view(-1).tolist()
                 class_num = det[j, 15].cpu().numpy()
                 orgimg = show_results(orgimg, xyxy, conf, landmarks, class_num)
 
     #cv2.imwrite('result.jpg', orgimg)
-    return orgimg
+
+    return orgimg, xyxy_list
 

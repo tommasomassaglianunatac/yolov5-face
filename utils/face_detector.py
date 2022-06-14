@@ -127,10 +127,12 @@ class YoloFaceV5:
                         xyxy = np.array(det[j, :4].view(-1), dtype=np.int16).tolist()
                         conf = det[j, 4].cpu().numpy()
                         detections.append(xyxy)
-                        # landmarks = det[j, 5:15].view(-1).tolist()
-                        # class_num = det[j, 15].cpu().numpy()
-                        # if return_img:
-                        #     orgimg = self.show_results(orgimg, xyxy, conf, landmarks, class_num)
-                        #     return detections, orgimg
+                        landmarks = det[j, 5:15].view(-1).tolist()
+                        class_num = det[j, 15].cpu().numpy()
 
+                        if return_img:
+                            orgimg = self.show_results(orgimg, xyxy, conf, landmarks, class_num)
+
+        if return_img:
+                return detections, orgimg
         return detections

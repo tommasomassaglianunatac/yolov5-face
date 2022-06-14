@@ -1,3 +1,3 @@
 */__pycache__
 venv_yolov5-face
-multitask_agegender\mtask-efficientnet-ckpt
+multitask_agegender/mtask-efficientnet-ckpt/*
